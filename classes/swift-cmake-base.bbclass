@@ -84,24 +84,21 @@ EXTRANATIVEPATH += "swift-tools"
 # is an unproven theory.                                                       #
 ################################################################################
 
-do_create_gcc_version_symlinks() {
-    GCC_VERSION=`basename ${STAGING_DIR_TARGET}/usr/include/c++/*`
+do_configure:prepend() {
+    GCC_VERSION_LOOK_FOR=`echo ${GCCVERSION} | sed "s|%|*|g"`
+    SWIFT_GCC_VERSION=`basename ${STAGING_DIR_TARGET}/usr/include/c++/${GCC_VERSION_LOOK_FOR}`
 
-    if [ ! -L "${STAGING_DIR_TARGET}/usr/lib/${TARGET_SYS}/current" ]; then
-        cd ${STAGING_DIR_TARGET}/usr/lib/${TARGET_SYS}
-        ln -s -r ${GCC_VERSION} current
-    fi
+    CURRENT_DIR=`pwd`
+    cd ${STAGING_DIR_TARGET}/usr/lib/${TARGET_SYS}
+    rm -f current
+    ln -s -r ${SWIFT_GCC_VERSION} current
 
-    if [ ! -L "${STAGING_DIR_TARGET}/usr/include/c++/current" ]; then
-        cd ${STAGING_DIR_TARGET}/usr/include/c++
-        ln -s -r ${GCC_VERSION} current
-    fi
+    cd ${STAGING_DIR_TARGET}/usr/include/c++
+    rm -f current
+    ln -s -r ${SWIFT_GCC_VERSION} current
 
-    if [ ! -L "${STAGING_DIR_NATIVE}/usr/lib/${TARGET_SYS}/gcc/${TARGET_SYS}/current" ]; then
-        cd ${STAGING_DIR_NATIVE}/usr/lib/${TARGET_SYS}/gcc/${TARGET_SYS}
-        ln -s -r ${GCC_VERSION} current
-    fi
+    cd ${STAGING_DIR_NATIVE}/usr/lib/${TARGET_SYS}/gcc/${TARGET_SYS}
+    rm -f current
+    ln -s -r ${SWIFT_GCC_VERSION} current
+    cd ${CURRENT_DIR}
 }
-
-addtask do_create_gcc_version_symlinks after do_prepare_recipe_sysroot before do_configure
-
