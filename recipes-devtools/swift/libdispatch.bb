@@ -8,7 +8,8 @@ LIC_FILES_CHKSUM = "file://${S}/LICENSE;md5=1cd73afe3fb82e8d5c899b9d926451d0"
 require swift-version.inc
 PV = "${SWIFT_VERSION}"
 
-SRC_URI = "git://github.com/apple/swift-corelibs-libdispatch.git;protocol=https;tag=swift-${PV}-RELEASE;nobranch=1"
+# tag swift-${PV}-RELEASE
+SRC_URI = "git://github.com/apple/swift-corelibs-libdispatch.git;protocol=https;nobranch=1;rev=b602cbb26c5cee1aac51021aa2cd6a30a03b1bd3"
 
 DEPENDS = "swift-stdlib ncurses"
 

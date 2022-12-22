@@ -7,12 +7,13 @@ LIC_FILES_CHKSUM = "file://${S}/LICENSE.txt;md5=f6c482a0548ea60d6c2e015776534035
 require swift-version.inc
 PV = "${SWIFT_VERSION}"
 
-SRC_URI = "git://github.com/apple/swift.git;protocol=https;tag=swift-${PV}-RELEASE;nobranch=1 \
+# tag swift-${PV}-RELEASE
+SRC_URI = "git://github.com/apple/swift.git;protocol=https;nobranch=1;rev=50794e1ae31a08b492cc717ead6f99e7d6932e21 \
         file://0001-Float16.patch \
         file://fix_modulemap.sh \
         file://cmake-configure-swift-stdlib.sh \
         "
-SRC_URI += "git://github.com/apple/swift-corelibs-libdispatch.git;protocol=https;tag=swift-${PV}-RELEASE;nobranch=1;destsuffix=libdispatch" 
+SRC_URI += "git://github.com/apple/swift-corelibs-libdispatch.git;protocol=https;nobranch=1;destsuffix=libdispatch;rev=b602cbb26c5cee1aac51021aa2cd6a30a03b1bd3"
 
 S = "${WORKDIR}/git"
 SWIFT_BUILDDIR = "${S}/build"

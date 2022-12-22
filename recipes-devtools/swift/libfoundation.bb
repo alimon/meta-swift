@@ -7,7 +7,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=1cd73afe3fb82e8d5c899b9d926451d0"
 require swift-version.inc
 PV = "${SWIFT_VERSION}"
 
-SRC_URI = "git://github.com/apple/swift-corelibs-foundation.git;protocol=https;tag=swift-${PV}-RELEASE;nobranch=1"
+# tag swift-${PV}-RELEASE
+SRC_URI = "git://github.com/apple/swift-corelibs-foundation.git;protocol=https;nobranch=1;rev=a87d185cecfc50086a592852bae223d5ec214cea"
 
 S = "${WORKDIR}/git"
 
