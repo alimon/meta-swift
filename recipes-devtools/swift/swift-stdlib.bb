@@ -133,6 +133,6 @@ do_install() {
     cp -rf ${SWIFT_BUILDDIR}/lib/swift ${D}${libdir}/
 }
 
-FILES_${PN} = "${libdir}/swift/*"
-INSANE_SKIP_${PN} = "file-rdeps"
+FILES:${PN} = "${libdir}/swift/*"
+INSANE_SKIP:${PN} = "file-rdeps"
 do_package_qa[noexec] = "1"
