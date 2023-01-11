@@ -84,9 +84,21 @@ EXTRANATIVEPATH += "swift-tools"
 # is an unproven theory.                                                       #
 ################################################################################
 
-do_create_gcc_version_symlinks() {
-    GCC_VERSION=`basename ${STAGING_DIR_TARGET}/usr/include/c++/*`
+python () {
+    import glob
+    import os
 
+    gcc_version = d.getVar("GCCVERSION")
+    gcc_version = gcc_version.replace("%", "*")
+
+    staging_dir_target = d.getVar("STAGING_DIR_TARGET")
+    swift_gcc_version = glob.glob("%s/usr/include/c++/%s" % (staging_dir_target, gcc_version))
+    if swift_gcc_version:
+        swift_gcc_version = os.path.basename(swift_gcc_version[0])
+        d.setVar("SWIFT_GCC_VERSION", swift_gcc_version)
+}
+
+do_create_gcc_version_symlinks() {
     if [ ! -L "${STAGING_DIR_TARGET}/usr/lib/${TARGET_SYS}/current" ]; then
         cd ${STAGING_DIR_TARGET}/usr/lib/${TARGET_SYS}
         ln -s -r ${GCC_VERSION} current
