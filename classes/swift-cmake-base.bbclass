@@ -117,6 +117,3 @@ do_create_gcc_version_symlinks() {
 }
 
 addtask do_create_gcc_version_symlinks after do_prepare_recipe_sysroot before do_configure
-
-SSTATETASKS += "do_create_gcc_version_symlinks"
-PACKAGE_ARCHS[vardeps] += "GCCVERSION"
