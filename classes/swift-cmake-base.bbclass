@@ -84,25 +84,11 @@ EXTRANATIVEPATH += "swift-tools"
 # is an unproven theory.                                                       #
 ################################################################################
 
-python () {
-    import glob
-    import os
+do_configure_prepend() {
+    GCC_VERSION_LOOK_FOR=`echo ${GCCVERSION} | sed "s|%|*|g"`
+    SWIFT_GCC_VERSION=`basename ${STAGING_DIR_TARGET}/usr/include/c++/${GCC_VERSION_LOOK_FOR}`
 
-    gcc_version = d.getVar("GCCVERSION")
-    gcc_version = gcc_version.replace("%", "*")
-
-    staging_dir_target = d.getVar("STAGING_DIR_TARGET")
-    swift_gcc_version = glob.glob("%s/usr/include/c++/%s" % (staging_dir_target, gcc_version))
-    if swift_gcc_version:
-        swift_gcc_version = os.path.basename(swift_gcc_version[0])
-        d.setVar("SWIFT_GCC_VERSION", swift_gcc_version)
-}
-
-do_create_gcc_version_symlinks() {
-    if [ ! ${SWIFT_GCC_VERSION} ]; then
-        return
-    fi
-
+    CURRENT_DIR=`pwd`
     cd ${STAGING_DIR_TARGET}/usr/lib/${TARGET_SYS}
     rm -f current
     ln -s -r ${SWIFT_GCC_VERSION} current
@@ -114,6 +100,5 @@ do_create_gcc_version_symlinks() {
     cd ${STAGING_DIR_NATIVE}/usr/lib/${TARGET_SYS}/gcc/${TARGET_SYS}
     rm -f current
     ln -s -r ${SWIFT_GCC_VERSION} current
+    cd ${CURRENT_DIR}
 }
-
-addtask do_create_gcc_version_symlinks after do_prepare_recipe_sysroot before do_configure
