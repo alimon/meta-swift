@@ -22,8 +22,8 @@ DEPENDS += " swift-native swift-llvm-native libgcc gcc glibc libxml2"
 inherit swift-cmake-base
 
 EXTRA_INCLUDE_FLAGS = "\
-    -I${STAGING_DIR_TARGET}/usr/include/c++/${SWIFT_GGC_VERSION}/${TARGET_SYS} \
-    -I${STAGING_DIR_TARGET}/usr/include/c++/${SWIFT_GGC_VERSION} \
+    -I${STAGING_DIR_TARGET}/usr/include/c++/current/${TARGET_SYS} \
+    -I${STAGING_DIR_TARGET}/usr/include/c++/current \
     -I${STAGING_DIR_TARGET}"
 
 TARGET_LDFLAGS += "-w -fuse-ld=lld -L${STAGING_DIR_TARGET}/usr/lib/${TARGET_SYS}/current"
