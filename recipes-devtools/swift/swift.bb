@@ -17,8 +17,9 @@ RDEPENDS:${PN} = "libedit libxml2 ncurses sqlite3 util-linux-libuuid"
 S = "${WORKDIR}/${SRC_DIR}"
 
 do_install () {
-    cp -r ${S}/usr ${D}/
-    chown -R root:root ${D}/usr
+    mkdir -p ${D}/usr/local
+    cp -r ${S}/usr/* ${D}/usr/local
+    chown -R root:root ${D}/usr/local
 
     # XXX: fake symlinks to point ncurses5
     mkdir -p ${D}${base_libdir}
@@ -31,15 +32,15 @@ do_install () {
     ln -sf libedit.so.0.0.64 ${D}${libdir}/libedit.so.2
 
     # XXX: fix dev-elf check
-    mv ${D}${libdir}/libswiftDemangle.so ${D}${libdir}/libswiftDemangle.so.1
-    ln -sf libswiftDemangle.so.1 ${D}${libdir}/libswiftDemangle.so
+    mv ${D}/usr/local/lib/libswiftDemangle.so ${D}/usr/local/lib/libswiftDemangle.so.1
+    ln -sf libswiftDemangle.so.1 ${D}/usr/local/lib/libswiftDemangle.so
 
-    mv ${D}${libdir}/libsourcekitdInProc.so ${D}${libdir}/libsourcekitdInProc.so.1
-    ln -sf libsourcekitdInProc.so.1 ${D}${libdir}/libsourcekitdInProc.so
+    mv ${D}/usr/local/lib/libsourcekitdInProc.so ${D}/usr/local/lib/libsourcekitdInProc.so.1
+    ln -sf libsourcekitdInProc.so.1 ${D}/usr/local/lib/libsourcekitdInProc.so
 
 }
 
-FILES:${PN} += "${base_libdir} /usr"
+FILES:${PN} += "${base_libdir} /usr/local"
 
 COMPATIBLE_MACHINE = "(aarch64)"
 
