@@ -12,7 +12,7 @@ SRC_URI = "https://download.swift.org/swift-${PV}-release/ubuntu2004-aarch64/swi
 SRC_URI[sha256sum] = "af006a81d966fe08f5472c3cab81892d721a888189d4e11a1fe1336300c9345b"
 
 DEPENDS = "curl"
-RDEPENDS:${PN} = "libedit libxml2 ncurses sqlite3 util-linux-libuuid"
+RDEPENDS:${PN} = "libedit libxml2 ncurses libsqlite3 util-linux-libuuid"
 
 S = "${WORKDIR}/${SRC_DIR}"
 
